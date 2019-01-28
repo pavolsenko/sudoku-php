@@ -1,0 +1,17 @@
+{
+    "name": "pavolsenko/sudoku-php",
+    "description": "Sudoku puzzle generator and solver in PHP.",
+    "type": "project",
+    "require": {
+        "php": ">=7.2"
+    },
+    "authors": [
+        {
+            "name": "Pavol Senko",
+            "email": "pavol.senko@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {"PhpSudoku\\": "src/"}
+    }
+}
