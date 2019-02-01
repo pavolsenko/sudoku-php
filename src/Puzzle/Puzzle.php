@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace PhpSudoku\Puzzle;
 
 use PhpSudoku\Generator\GeneratorInterface;
+use PhpSudoku\Helper\PuzzleHelper;
 
 class Puzzle
 {
@@ -12,13 +13,16 @@ class Puzzle
     private const DIFFICULTY_HARD = 2;
 
     private $generator;
+    private $puzzleHelper;
 
     private $gameGrid;
     private $fullGrid;
 
-    public function __construct(GeneratorInterface $generator)
+    public function __construct(GeneratorInterface $generator, PuzzleHelper $puzzleHelper)
     {
         $this->generator = $generator;
+        $this->puzzleHelper = $puzzleHelper;
+
     }
 
     public function getGameGrid(): array

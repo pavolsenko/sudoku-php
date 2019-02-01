@@ -3,13 +3,22 @@ declare(strict_types=1);
 
 namespace PhpSudoku\Generator;
 
+use PhpSudoku\Helper\PuzzleHelper;
+
 class BacktrackGenerator implements GeneratorInterface
 {
     private $puzzle;
 
+    private $puzzleHelper;
+
+    public function __construct(PuzzleHelper $puzzleHelper)
+    {
+        $this->puzzleHelper = $puzzleHelper;
+    }
+
     public function generate(): array
     {
-        $this->puzzle = $this->resetPuzzle();
+        $this->puzzle = $this->puzzleHelper->createEmptyPuzzle();
         $this->puzzle[0] = $this->generateRandomNiner();
 
         $this->addNextNumberToPuzzle(
@@ -19,19 +28,6 @@ class BacktrackGenerator implements GeneratorInterface
         );
 
         return $this->puzzle;
-    }
-
-    private function resetPuzzle(): array
-    {
-        $puzzle = [];
-
-        for ($row = 0; $row < 9; $row++) {
-            for ($column = 0; $column < 9; $column++) {
-                $puzzle[$row][$column] = null;
-            }
-        }
-
-        return $puzzle;
     }
 
     /**
