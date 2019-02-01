@@ -49,14 +49,44 @@ class Puzzle
 
     private function createGame(int $difficulty = self::DIFFICULTY_EASY): void
     {
+        if ($difficulty === self::DIFFICULTY_EASY) {
+            $difficultyDividerConstant = 6;
+            $randomPremiumNumbers = [
+                rand(1, 4) => 7,
+                rand(5, 9) => 7,
+            ];
+        }
+
+        if ($difficulty === self::DIFFICULTY_MEDIUM) {
+            $difficultyDividerConstant = 7;
+            $randomPremiumNumbers = [
+                rand(1, 9) => 6,
+            ];
+        }
+
+        if ($difficulty === self::DIFFICULTY_HARD) {
+            $difficultyDividerConstant = 8;
+            $randomPremiumNumbers = [
+                rand(1, 9) => 5,
+            ];
+        }
+
         for ($row = 0; $row < 9; $row++) {
             for ($column = 0; $column < 9; $column++) {
+                $currentNumber = $this->fullGrid[$row][$column];
+                $premiumVisibility = false;
+                $isPremiumNumber = array_key_exists($currentNumber, $randomPremiumNumbers);
 
-                $shouldNumberBeVisible = $this->shouldNumberBeVisible(
-                    $row,
-                    $column,
-                    $difficulty
-                );
+                if ($isPremiumNumber) {
+                    if ($randomPremiumNumbers[$currentNumber] > 0) {
+                        $premiumVisibility = true;
+                        $randomPremiumNumbers[$this->fullGrid[$row][$column]]--;
+                    }
+                }
+
+                $randomVisibility = rand(0, 100) % $difficultyDividerConstant === 0;
+
+                $shouldNumberBeVisible = $premiumVisibility || $randomVisibility;
 
                 if ($shouldNumberBeVisible) {
                     $this->gameGrid[$row][$column] = $this->fullGrid[$row][$column];
@@ -66,31 +96,6 @@ class Puzzle
                 $this->gameGrid[$row][$column] = null;
             }
         }
-    }
-
-    private function shouldNumberBeVisible(int $row, int $column, int $difficulty): bool
-    {
-        if ($difficulty === self::DIFFICULTY_EASY) {
-            $difficultyDividerConstant = 3;
-            $maxNumbersPerSquare = 6;
-        }
-
-        if ($difficulty === self::DIFFICULTY_MEDIUM) {
-            $difficultyDividerConstant = 4;
-            $maxNumbersPerSquare = 5;
-        }
-
-        if ($difficulty === self::DIFFICULTY_HARD) {
-            $difficultyDividerConstant = 5;
-            $maxNumbersPerSquare = 4;
-        }
-
-        $makeNUmbreVisible = rand(0, 81) % $difficultyDividerConstant === 0;
-        if ($makeNUmbreVisible) {
-            return true;
-        }
-
-        return false;
     }
 
     private function isSolvable(): bool
