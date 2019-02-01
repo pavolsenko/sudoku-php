@@ -19,8 +19,15 @@ class CommandLineViewer implements ViewerInterface
 
     public function view(Puzzle $puzzle): string
     {
-        $puzzle = $puzzle->getFullGrid();
+        $result = $this->viewGrid($puzzle->getFullGrid());
+        $result .= "\n";
+        $result .= $this->viewGrid($puzzle->getGameGrid());
 
+        return $result;
+    }
+
+    public function viewGrid(array $grid): string
+    {
         $result = $this->drawLine(self::LINE_TOP);
 
         for ($row = 0; $row < 9; $row++) {
@@ -31,7 +38,13 @@ class CommandLineViewer implements ViewerInterface
             $result .= "│ ";
 
             for ($column = 0; $column < 9; $column++) {
-                $result .= $puzzle[$row][$column];
+                $puzzleValue = $grid[$row][$column];
+
+                if ($puzzleValue) {
+                    $result .= $puzzleValue;
+                } else {
+                    $result .= " ";
+                }
 
                 if ($column % 3 === 2) {
                     $result .= " │ ";

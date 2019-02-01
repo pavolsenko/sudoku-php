@@ -7,6 +7,7 @@ require __DIR__ . '/../vendor/autoload.php';
 
 use PhpSudoku\Application\Application;
 use PhpSudoku\Generator\BacktrackGenerator;
+use PhpSudoku\Helper\PuzzleHelper;
 use PhpSudoku\Puzzle\Puzzle;
 use PhpSudoku\Viewer\CommandLineViewer;
 use PhpSudoku\Viewer\HtmlViewer;
@@ -17,8 +18,9 @@ if (php_sapi_name() === "cli") {
     $viewer = new HtmlViewer();
 }
 
-$generator = new BacktrackGenerator();
-$puzzle = new Puzzle($generator);
+$puzzleHelper = new PuzzleHelper();
+$generator = new BacktrackGenerator($puzzleHelper);
+$puzzle = new Puzzle($generator, $puzzleHelper);
 
 $application = new Application(
     $viewer,
