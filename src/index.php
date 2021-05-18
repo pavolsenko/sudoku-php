@@ -22,8 +22,7 @@ $puzzleHelper = new PuzzleHelper();
 
 $generator = new BacktrackGenerator($puzzleHelper);
 
-
-		$puzzle = new Puzzle($generator, $puzzleHelper);
+$puzzle = new Puzzle($generator, $puzzleHelper);
 
 $application = new Application($viewer, $puzzle);
 
