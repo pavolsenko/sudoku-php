@@ -22,9 +22,6 @@ $puzzleHelper = new PuzzleHelper();
 $generator = new BacktrackGenerator($puzzleHelper);
 $puzzle = new SudokuPuzzle($generator, $puzzleHelper);
 
-$application = new Application(
-    $viewer,
-    $puzzle
-);
+$application = new Application($viewer, $puzzle);
 
 $application->run();
