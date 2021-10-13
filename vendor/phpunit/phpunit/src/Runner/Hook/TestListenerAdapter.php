@@ -15,6 +15,7 @@ use PHPUnit\Framework\TestListener;
 use PHPUnit\Framework\TestSuite;
 use PHPUnit\Framework\Warning;
 use PHPUnit\Util\Test as TestUtil;
+use Throwable;
 
 /**
  * @internal This class is not covered by the backward compatibility promise for PHPUnit
@@ -47,7 +48,7 @@ final class TestListenerAdapter implements TestListener
         $this->lastTestWasNotSuccessful = false;
     }
 
-    public function addError(Test $test, \Throwable $t, float $time): void
+    public function addError(Test $test, Throwable $t, float $time): void
     {
         foreach ($this->hooks as $hook) {
             if ($hook instanceof AfterTestErrorHook) {
@@ -80,7 +81,7 @@ final class TestListenerAdapter implements TestListener
         $this->lastTestWasNotSuccessful = true;
     }
 
-    public function addIncompleteTest(Test $test, \Throwable $t, float $time): void
+    public function addIncompleteTest(Test $test, Throwable $t, float $time): void
     {
         foreach ($this->hooks as $hook) {
             if ($hook instanceof AfterIncompleteTestHook) {
@@ -91,7 +92,7 @@ final class TestListenerAdapter implements TestListener
         $this->lastTestWasNotSuccessful = true;
     }
 
-    public function addRiskyTest(Test $test, \Throwable $t, float $time): void
+    public function addRiskyTest(Test $test, Throwable $t, float $time): void
     {
         foreach ($this->hooks as $hook) {
             if ($hook instanceof AfterRiskyTestHook) {
@@ -102,7 +103,7 @@ final class TestListenerAdapter implements TestListener
         $this->lastTestWasNotSuccessful = true;
     }
 
-    public function addSkippedTest(Test $test, \Throwable $t, float $time): void
+    public function addSkippedTest(Test $test, Throwable $t, float $time): void
     {
         foreach ($this->hooks as $hook) {
             if ($hook instanceof AfterSkippedTestHook) {
@@ -115,7 +116,7 @@ final class TestListenerAdapter implements TestListener
 
     public function endTest(Test $test, float $time): void
     {
-        if ($this->lastTestWasNotSuccessful !== true) {
+        if (!$this->lastTestWasNotSuccessful) {
             foreach ($this->hooks as $hook) {
                 if ($hook instanceof AfterSuccessfulTestHook) {
                     $hook->executeAfterSuccessfulTest(TestUtil::describeAsString($test), $time);

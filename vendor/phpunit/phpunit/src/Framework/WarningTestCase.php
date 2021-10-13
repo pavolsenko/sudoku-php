@@ -15,11 +15,6 @@ namespace PHPUnit\Framework;
 final class WarningTestCase extends TestCase
 {
     /**
-     * @var string
-     */
-    protected $message = '';
-
-    /**
      * @var bool
      */
     protected $backupGlobals = false;
@@ -35,16 +30,14 @@ final class WarningTestCase extends TestCase
     protected $runTestInSeparateProcess = false;
 
     /**
-     * @var bool
+     * @var string
      */
-    protected $useErrorHandler = false;
+    private $message;
 
-    /**
-     * @param string $message
-     */
-    public function __construct($message = '')
+    public function __construct(string $message = '')
     {
         $this->message = $message;
+
         parent::__construct('Warning');
     }
 
@@ -63,6 +56,8 @@ final class WarningTestCase extends TestCase
 
     /**
      * @throws Exception
+     *
+     * @psalm-return never-return
      */
     protected function runTest(): void
     {

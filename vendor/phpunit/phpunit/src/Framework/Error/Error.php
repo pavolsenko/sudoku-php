@@ -12,7 +12,7 @@ namespace PHPUnit\Framework\Error;
 use PHPUnit\Framework\Exception;
 
 /**
- * @internal This class is not covered by the backward compatibility promise for PHPUnit
+ * @internal
  */
 class Error extends Exception
 {
