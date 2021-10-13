@@ -1,3 +1,5 @@
 .idea
 .code-coverage
 .phpunit.result.cache
+composer.lock
+vendor
