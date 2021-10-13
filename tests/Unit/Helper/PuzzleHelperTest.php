@@ -1,13 +1,12 @@
 <?php
 declare(strict_types = 1);
 
-use PhpSudoku\Helper\PuzzleHelper;
+use SudokuPhp\Helper\PuzzleHelper;
 use PHPUnit\Framework\TestCase;
 
 class PuzzleHelperTest extends TestCase
 {
-    /** @var PuzzleHelper */
-    private $puzzleHelper;
+    private PuzzleHelper $puzzleHelper;
 
     public function setUp(): void
     {
@@ -22,18 +21,18 @@ class PuzzleHelperTest extends TestCase
 
         for ($i = 0; $i < 20; $i++) {
             $this->assertNull(
-                $emptyPuzzle[rand(0, 8)][rand(0, 8)]
+                $emptyPuzzle->get()[rand(0, 8)][rand(0, 8)]
             );
         }
 
         $this->assertCount(
             9,
-            $emptyPuzzle
+            $emptyPuzzle->get()
         );
 
         $this->assertCount(
             9,
-            $emptyPuzzle[rand(0, 8)]
+            $emptyPuzzle->get()[rand(0, 8)]
         );
     }
 }

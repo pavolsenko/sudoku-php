@@ -1,9 +1,10 @@
 <?php
 declare(strict_types = 1);
 
-namespace PhpSudoku\Viewer;
+namespace SudokuPhp\Viewer;
 
-use PhpSudoku\Puzzle\Puzzle;
+use SudokuPhp\Puzzle\SudokuGrid;
+use SudokuPhp\Puzzle\SudokuPuzzle;
 
 class CommandLineViewer implements ViewerInterface
 {
@@ -17,7 +18,7 @@ class CommandLineViewer implements ViewerInterface
     private const LINE_MIDDLE = 1;
     private const LINE_BOTTOM = 2;
 
-    public function view(Puzzle $puzzle): string
+    public function view(SudokuPuzzle $puzzle): string
     {
         $result = $this->viewGrid($puzzle->getFullGrid());
         $result .= "\n";
@@ -26,7 +27,7 @@ class CommandLineViewer implements ViewerInterface
         return $result;
     }
 
-    public function viewGrid(array $grid): string
+    public function viewGrid(SudokuGrid $grid): string
     {
         $result = $this->drawLine(self::LINE_TOP);
 

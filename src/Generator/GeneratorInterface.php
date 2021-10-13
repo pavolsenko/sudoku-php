@@ -1,9 +1,11 @@
 <?php
 declare(strict_types = 1);
 
-namespace PhpSudoku\Generator;
+namespace SudokuPhp\Generator;
+
+use SudokuPhp\Puzzle\SudokuGrid;
 
 interface GeneratorInterface
 {
-    public function generate(): array;
+    public function generate(): SudokuGrid;
 }

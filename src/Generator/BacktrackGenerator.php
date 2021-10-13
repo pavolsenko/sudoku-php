@@ -1,33 +1,34 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
-namespace PhpSudoku\Generator;
+namespace SudokuPhp\Generator;
 
-use PhpSudoku\Helper\PuzzleHelper;
+use SudokuPhp\Helper\PuzzleHelper;
+use SudokuPhp\Puzzle\SudokuGrid;
 
 class BacktrackGenerator implements GeneratorInterface
 {
-    private $puzzle;
+    private SudokuGrid $grid;
 
-    private $puzzleHelper;
+    private PuzzleHelper $puzzleHelper;
 
     public function __construct(PuzzleHelper $puzzleHelper)
     {
         $this->puzzleHelper = $puzzleHelper;
     }
 
-    public function generate(): array
+    public function generate(): SudokuGrid
     {
-        $this->puzzle = $this->puzzleHelper->createEmptyPuzzle();
-        $this->puzzle[0] = $this->generateRandomNiner();
+        $this->grid = $this->puzzleHelper->createEmptyPuzzle();
+        $this->grid[0] = $this->generateRandomNiner();
 
         $this->addNextNumberToPuzzle(
-            $this->puzzle,
+            $this->grid,
             $row = 1,
-            $column = 0
+            $column = 0,
         );
 
-        return $this->puzzle;
+        return $this->grid;
     }
 
     /**
@@ -51,10 +52,10 @@ class BacktrackGenerator implements GeneratorInterface
         return $resultNiner;
     }
 
-    private function addNextNumberToPuzzle(array $puzzle, int $row, int $column): bool
+    private function addNextNumberToPuzzle(SudokuGrid $grid, int $row, int $column): bool
     {
         if ($row === 9) {
-            $this->puzzle = $puzzle;
+            $this->grid = $grid;
             return true;
         }
 
@@ -64,7 +65,7 @@ class BacktrackGenerator implements GeneratorInterface
 
             $isValidNumber = $this->isValidNumber(
                 $nextNumber,
-                $puzzle,
+                $grid,
                 $row,
                 $column
             );
@@ -73,14 +74,14 @@ class BacktrackGenerator implements GeneratorInterface
                 continue;
             }
 
-            $puzzle[$row][$column] = $nextNumber;
+            $grid[$row][$column] = $nextNumber;
 
             if ($column == 8) {
-                if ($this->addNextNumberToPuzzle($puzzle, $row + 1, 0)) {
+                if ($this->addNextNumberToPuzzle($grid, $row + 1, 0)) {
                     return true;
                 }
             } else {
-                if ($this->addNextNumberToPuzzle($puzzle, $row, $column + 1)) {
+                if ($this->addNextNumberToPuzzle($grid, $row, $column + 1)) {
                     return true;
                 }
             }
@@ -89,14 +90,14 @@ class BacktrackGenerator implements GeneratorInterface
         return false;
     }
 
-    private function isValidNumber(int $number, array $puzzle, int $row, int $column): bool
+    private function isValidNumber(int $number, SudokuGrid $grid, int $row, int $column): bool
     {
         for ($i = 0; $i < 9; $i++) {
-            if ($puzzle[$row][$i] === $number) {
+            if ($grid[$row][$i] === $number) {
                 return false;
             }
 
-            if ($puzzle[$i][$column] === $number) {
+            if ($grid[$i][$column] === $number) {
                 return false;
             }
         }
@@ -110,23 +111,22 @@ class BacktrackGenerator implements GeneratorInterface
         $column1 = ($column + 2) % 3;
         $column2 = ($column + 4) % 3;
 
-        if ($puzzle[$row1 + $sectorRow][$column1 + $sectorColumn] === $number) {
+        if ($grid[$row1 + $sectorRow][$column1 + $sectorColumn] === $number) {
             return false;
         }
 
-        if ($puzzle[$row2 + $sectorRow][$column1 + $sectorColumn] === $number) {
+        if ($grid[$row2 + $sectorRow][$column1 + $sectorColumn] === $number) {
             return false;
         }
 
-        if ($puzzle[$row1 + $sectorRow][$column2 + $sectorColumn] === $number) {
+        if ($grid[$row1 + $sectorRow][$column2 + $sectorColumn] === $number) {
             return false;
         }
 
-        if ($puzzle[$row2 + $sectorRow][$column2 + $sectorColumn] === $number) {
+        if ($grid[$row2 + $sectorRow][$column2 + $sectorColumn] === $number) {
             return false;
         }
 
         return true;
     }
-
 }

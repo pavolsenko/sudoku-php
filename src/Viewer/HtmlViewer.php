@@ -1,13 +1,13 @@
 <?php
 declare(strict_types = 1);
 
-namespace PhpSudoku\Viewer;
+namespace SudokuPhp\Viewer;
 
-use PhpSudoku\Puzzle\Puzzle;
+use SudokuPhp\Puzzle\SudokuPuzzle;
 
 class HtmlViewer implements ViewerInterface
 {
-    public function view(Puzzle $puzzle): string
+    public function view(SudokuPuzzle $puzzle): string
     {
         return "<html lang='en'></html>";
     }

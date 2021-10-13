@@ -1,50 +1,44 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
-namespace PhpSudoku\Puzzle;
+namespace SudokuPhp\Puzzle;
 
-use PhpSudoku\Generator\GeneratorInterface;
-use PhpSudoku\Helper\PuzzleHelper;
+use SudokuPhp\Generator\GeneratorInterface;
+use SudokuPhp\Helper\PuzzleHelper;
 
-class Puzzle
+class SudokuPuzzle
 {
     private const DIFFICULTY_EASY = 0;
     private const DIFFICULTY_MEDIUM = 1;
     private const DIFFICULTY_HARD = 2;
 
-    private $generator;
-    private $puzzleHelper;
+    private GeneratorInterface $generator;
+    private PuzzleHelper $puzzleHelper;
 
-    private $gameGrid;
-    private $fullGrid;
+    private SudokuGrid $gameGrid;
+    private SudokuGrid $fullGrid;
 
     public function __construct(GeneratorInterface $generator, PuzzleHelper $puzzleHelper)
     {
         $this->generator = $generator;
         $this->puzzleHelper = $puzzleHelper;
-
     }
 
-    public function getGameGrid(): array
+    public function getGameGrid(): SudokuGrid
     {
         return $this->gameGrid;
     }
 
-    public function getFullGrid(): array
+    public function getFullGrid(): SudokuGrid
     {
         return $this->fullGrid;
     }
 
     public function create(): void
     {
-
         $this->fullGrid = $this->generator->generate();
-
-        while (!$this->isSolvable()) {
-            $this->gameGrid = $this->puzzleHelper->createEmptyPuzzle();
-            $this->createGame();
-            break;
-        }
+        $this->gameGrid = $this->puzzleHelper->createEmptyPuzzle();
+        $this->createGame();
     }
 
     private function createGame(int $difficulty = self::DIFFICULTY_EASY): void
@@ -98,13 +92,8 @@ class Puzzle
         }
     }
 
-    private function isSolvable(): bool
-    {
-        return false;
-    }
-
     public function solve(): void
     {
-
+        // TODO: implement solving algorithm
     }
 }

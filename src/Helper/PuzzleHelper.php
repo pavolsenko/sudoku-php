@@ -1,20 +1,22 @@
 <?php
 declare(strict_types = 1);
 
-namespace PhpSudoku\Helper;
+namespace SudokuPhp\Helper;
+
+use SudokuPhp\Puzzle\SudokuGrid;
 
 class PuzzleHelper
 {
-    public function createEmptyPuzzle(): array
+    public function createEmptyPuzzle(): SudokuGrid
     {
-        $puzzle = [];
+        $grid = [];
 
         for ($row = 0; $row < 9; $row++) {
             for ($column = 0; $column < 9; $column++) {
-                $puzzle[$row][$column] = null;
+                $grid[$row][$column] = null;
             }
         }
 
-        return $puzzle;
+        return new SudokuGrid($grid);
     }
 }

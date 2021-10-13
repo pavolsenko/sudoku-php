@@ -1,17 +1,17 @@
 <?php
 declare(strict_types = 1);
 
-namespace PhpSudoku\Application;
+namespace SudokuPhp\Application;
 
-use PhpSudoku\Puzzle\Puzzle;
-use PhpSudoku\Viewer\ViewerInterface;
+use SudokuPhp\Puzzle\SudokuPuzzle;
+use SudokuPhp\Viewer\ViewerInterface;
 
 class Application
 {
-    private $viewer;
-    private $puzzle;
+    private ViewerInterface $viewer;
+    private SudokuPuzzle $puzzle;
 
-    public function __construct(ViewerInterface $viewer, Puzzle $puzzle)
+    public function __construct(ViewerInterface $viewer, SudokuPuzzle $puzzle)
     {
         $this->viewer = $viewer;
         $this->puzzle = $puzzle;
