@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+namespace Unit\Helper;
 
 use SudokuPhp\Helper\PuzzleHelper;
 use PHPUnit\Framework\TestCase;
@@ -17,22 +18,24 @@ class PuzzleHelperTest extends TestCase
 
     public function test_it_should_create_empty_puzzle_of_size_9_by_9()
     {
-        $emptyPuzzle = $this->puzzleHelper->createEmptyPuzzle();
+        $emptyPuzzle = $this->puzzleHelper->createEmptyGrid()->getGrid();
 
-        for ($i = 0; $i < 20; $i++) {
-            $this->assertNull(
-                $emptyPuzzle->get()[rand(0, 8)][rand(0, 8)]
-            );
+        for ($i = 0; $i < 9; $i++) {
+            for ($j = 0; $j < 9; $j++) {
+                $this->assertNull(
+                    $emptyPuzzle[$i][$j],
+                );
+            }
         }
 
         $this->assertCount(
             9,
-            $emptyPuzzle->get()
+            $emptyPuzzle,
         );
 
         $this->assertCount(
             9,
-            $emptyPuzzle->get()[rand(0, 8)]
+            $emptyPuzzle[rand(0, 8)],
         );
     }
 }
