@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 namespace SudokuPhp\Puzzle;
 
@@ -37,7 +36,7 @@ class SudokuPuzzle
     public function create(): void
     {
         $this->fullGrid = $this->generator->generate();
-        $this->gameGrid = $this->puzzleHelper->createEmptyPuzzle();
+        $this->gameGrid = $this->puzzleHelper->createEmptyGrid();
         $this->createGame();
     }
 
@@ -67,14 +66,14 @@ class SudokuPuzzle
 
         for ($row = 0; $row < 9; $row++) {
             for ($column = 0; $column < 9; $column++) {
-                $currentNumber = $this->fullGrid[$row][$column];
+                $currentNumber = $this->fullGrid->getGridItem($row, $column);
                 $premiumVisibility = false;
                 $isPremiumNumber = array_key_exists($currentNumber, $randomPremiumNumbers);
 
                 if ($isPremiumNumber) {
                     if ($randomPremiumNumbers[$currentNumber] > 0) {
                         $premiumVisibility = true;
-                        $randomPremiumNumbers[$this->fullGrid[$row][$column]]--;
+                        $randomPremiumNumbers[$this->fullGrid->getGridItem($row, $column)]--;
                     }
                 }
 
@@ -83,11 +82,15 @@ class SudokuPuzzle
                 $shouldNumberBeVisible = $premiumVisibility || $randomVisibility;
 
                 if ($shouldNumberBeVisible) {
-                    $this->gameGrid[$row][$column] = $this->fullGrid[$row][$column];
+                    $this->gameGrid = $this->gameGrid->setGridItem(
+                        $row,
+                        $column,
+                        $this->fullGrid->getGridItem($row, $column),
+                    );
                     continue;
                 }
 
-                $this->gameGrid[$row][$column] = null;
+                $this->gameGrid = $this->gameGrid->setGridItem($row, $column, null);
             }
         }
     }

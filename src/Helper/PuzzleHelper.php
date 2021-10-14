@@ -7,7 +7,7 @@ use SudokuPhp\Puzzle\SudokuGrid;
 
 class PuzzleHelper
 {
-    public function createEmptyPuzzle(): SudokuGrid
+    public function createEmptyGrid(): SudokuGrid
     {
         $grid = [];
 

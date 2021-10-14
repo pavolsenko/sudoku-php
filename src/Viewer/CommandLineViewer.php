@@ -29,7 +29,7 @@ class CommandLineViewer implements ViewerInterface
 
     public function viewGrid(SudokuGrid $grid): string
     {
-        $result = $this->drawLine(self::LINE_TOP);
+        $result = "\n" . $this->drawLine(self::LINE_TOP);
 
         for ($row = 0; $row < 9; $row++) {
             if ($row > 0 && $row % 3 === 0) {
@@ -39,7 +39,7 @@ class CommandLineViewer implements ViewerInterface
             $result .= "│ ";
 
             for ($column = 0; $column < 9; $column++) {
-                $puzzleValue = $grid[$row][$column];
+                $puzzleValue = $grid->getGridItem($row, $column);
 
                 if ($puzzleValue) {
                     $result .= $puzzleValue;

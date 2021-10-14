@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 namespace SudokuPhp\Generator;
 
@@ -8,27 +7,28 @@ use SudokuPhp\Puzzle\SudokuGrid;
 
 class BacktrackGenerator implements GeneratorInterface
 {
-    private SudokuGrid $grid;
+    private SudokuGrid $sudokuGrid;
 
     private PuzzleHelper $puzzleHelper;
 
     public function __construct(PuzzleHelper $puzzleHelper)
     {
         $this->puzzleHelper = $puzzleHelper;
+        $this->sudokuGrid = new SudokuGrid();
     }
 
     public function generate(): SudokuGrid
     {
-        $this->grid = $this->puzzleHelper->createEmptyPuzzle();
-        $this->grid[0] = $this->generateRandomNiner();
+        $this->sudokuGrid = $this->puzzleHelper->createEmptyGrid();
+        $this->sudokuGrid = $this->sudokuGrid->setGridRow(0, $this->generateRandomNiner());
 
         $this->addNextNumberToPuzzle(
-            $this->grid,
+            $this->sudokuGrid->getGrid(),
             $row = 1,
             $column = 0,
         );
 
-        return $this->grid;
+        return $this->sudokuGrid;
     }
 
     /**
@@ -52,14 +52,15 @@ class BacktrackGenerator implements GeneratorInterface
         return $resultNiner;
     }
 
-    private function addNextNumberToPuzzle(SudokuGrid $grid, int $row, int $column): bool
+    private function addNextNumberToPuzzle(array $grid, int $row, int $column): bool
     {
         if ($row === 9) {
-            $this->grid = $grid;
+            $this->sudokuGrid = $this->sudokuGrid->setGrid($grid);
             return true;
         }
 
         $randomNiner = $this->generateRandomNiner();
+
         for ($i = 0; $i < 9; $i++) {
             $nextNumber = $randomNiner[$i];
 
@@ -85,12 +86,12 @@ class BacktrackGenerator implements GeneratorInterface
                     return true;
                 }
             }
-        };
+        }
 
         return false;
     }
 
-    private function isValidNumber(int $number, SudokuGrid $grid, int $row, int $column): bool
+    private function isValidNumber(int $number, array $grid, int $row, int $column): bool
     {
         for ($i = 0; $i < 9; $i++) {
             if ($grid[$row][$i] === $number) {
