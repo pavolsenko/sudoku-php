@@ -24,11 +24,11 @@ class ComposerStaticInitdd995063cfb8ea98f8cb8f7089ced8c9
         'S' => 
         array (
             'Symfony\\Polyfill\\Ctype\\' => 23,
+            'SudokuPhp\\' => 10,
         ),
         'P' => 
         array (
             'Prophecy\\' => 9,
-            'PhpSudoku\\' => 10,
             'PhpParser\\' => 10,
         ),
         'D' => 
@@ -53,13 +53,13 @@ class ComposerStaticInitdd995063cfb8ea98f8cb8f7089ced8c9
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-ctype',
         ),
+        'SudokuPhp\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/src',
+        ),
         'Prophecy\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpspec/prophecy/src/Prophecy',
-        ),
-        'PhpSudoku\\' => 
-        array (
-            0 => __DIR__ . '/../..' . '/src',
         ),
         'PhpParser\\' => 
         array (
