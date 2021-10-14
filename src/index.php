@@ -7,12 +7,13 @@ require __DIR__ . '/../vendor/autoload.php';
 
 use SudokuPhp\Application\Application;
 use SudokuPhp\Generator\BacktrackGenerator;
+use SudokuPhp\Helper\CliHelper;
 use SudokuPhp\Helper\PuzzleHelper;
 use SudokuPhp\Puzzle\SudokuPuzzle;
 use SudokuPhp\Viewer\CommandLineViewer;
 use SudokuPhp\Viewer\HtmlViewer;
 
-if (php_sapi_name() === "cli") {
+if (CliHelper::isCli()) {
     $viewer = new CommandLineViewer();
 } else {
     $viewer = new HtmlViewer();
