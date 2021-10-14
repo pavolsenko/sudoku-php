@@ -8,7 +8,6 @@ use SudokuPhp\Puzzle\SudokuGrid;
 class BacktrackGenerator implements GeneratorInterface
 {
     private SudokuGrid $sudokuGrid;
-
     private PuzzleHelper $puzzleHelper;
 
     public function __construct(PuzzleHelper $puzzleHelper)
@@ -20,38 +19,23 @@ class BacktrackGenerator implements GeneratorInterface
     public function generate(): SudokuGrid
     {
         $this->sudokuGrid = $this->puzzleHelper->createEmptyGrid();
-        $this->sudokuGrid = $this->sudokuGrid->setGridRow(0, $this->generateRandomNiner());
+        $this->sudokuGrid = $this->sudokuGrid->setGridRow(
+            0,
+            $this->puzzleHelper->generateRandomNiner(),
+        );
 
         $this->addNextNumberToPuzzle(
             $this->sudokuGrid->getGrid(),
-            $row = 1,
-            $column = 0,
+            1,
+            0,
         );
 
         return $this->sudokuGrid;
     }
 
     /**
-     * Generates random combinations of 9 numbers
-     *
-     * @return array
+     * Recursively adds numbers to the puzzle, returns true if the puzzle is complete.
      */
-    private function generateRandomNiner(): array
-    {
-        $startNiner = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-        $resultNiner = [];
-
-        while (count($startNiner) > 0) {
-            $randomIndex = rand(0, count($startNiner) - 1);
-            $resultNiner[] = $startNiner[$randomIndex];
-
-            unset($startNiner[$randomIndex]);
-            $startNiner = array_values($startNiner);
-        }
-
-        return $resultNiner;
-    }
-
     private function addNextNumberToPuzzle(array $grid, int $row, int $column): bool
     {
         if ($row === 9) {
@@ -59,7 +43,7 @@ class BacktrackGenerator implements GeneratorInterface
             return true;
         }
 
-        $randomNiner = $this->generateRandomNiner();
+        $randomNiner = $this->puzzleHelper->generateRandomNiner();
 
         for ($i = 0; $i < 9; $i++) {
             $nextNumber = $randomNiner[$i];

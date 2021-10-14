@@ -19,4 +19,23 @@ class PuzzleHelper
 
         return new SudokuGrid($grid);
     }
+
+    /**
+     * Generates a random combination of 9 numbers from 1 to 9
+     */
+    public function generateRandomNiner(): array
+    {
+        $startNiner = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+        $resultNiner = [];
+
+        while (count($startNiner) > 0) {
+            $randomIndex = rand(0, count($startNiner) - 1);
+            $resultNiner[] = $startNiner[$randomIndex];
+
+            unset($startNiner[$randomIndex]);
+            $startNiner = array_values($startNiner);
+        }
+
+        return $resultNiner;
+    }
 }
