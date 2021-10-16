@@ -48,7 +48,7 @@ class BacktrackGenerator implements GeneratorInterface
         for ($i = 0; $i < 9; $i++) {
             $nextNumber = $randomNiner[$i];
 
-            $isValidNumber = $this->isValidNumber(
+            $isValidNumber = $this->puzzleHelper->isValidNumber(
                 $nextNumber,
                 $grid,
                 $row,
@@ -73,45 +73,5 @@ class BacktrackGenerator implements GeneratorInterface
         }
 
         return false;
-    }
-
-    private function isValidNumber(int $number, array $grid, int $row, int $column): bool
-    {
-        for ($i = 0; $i < 9; $i++) {
-            if ($grid[$row][$i] === $number) {
-                return false;
-            }
-
-            if ($grid[$i][$column] === $number) {
-                return false;
-            }
-        }
-
-        $sectorRow = 3 * ((int)($row / 3));
-        $sectorColumn = 3 * ((int)($column / 3));
-
-        $row1 = ($row + 2) % 3;
-        $row2 = ($row + 4) % 3;
-
-        $column1 = ($column + 2) % 3;
-        $column2 = ($column + 4) % 3;
-
-        if ($grid[$row1 + $sectorRow][$column1 + $sectorColumn] === $number) {
-            return false;
-        }
-
-        if ($grid[$row2 + $sectorRow][$column1 + $sectorColumn] === $number) {
-            return false;
-        }
-
-        if ($grid[$row1 + $sectorRow][$column2 + $sectorColumn] === $number) {
-            return false;
-        }
-
-        if ($grid[$row2 + $sectorRow][$column2 + $sectorColumn] === $number) {
-            return false;
-        }
-
-        return true;
     }
 }

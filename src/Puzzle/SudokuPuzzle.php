@@ -33,34 +33,38 @@ class SudokuPuzzle
         return $this->fullGrid;
     }
 
-    public function create(): void
+    public function create(?int $difficulty = self::DIFFICULTY_EASY): void
     {
         $this->fullGrid = $this->generator->generate();
         $this->gameGrid = $this->puzzleHelper->createEmptyGrid();
-        $this->createGame();
+        $this->createGame($difficulty);
     }
 
-    private function createGame(int $difficulty = self::DIFFICULTY_EASY): void
+    private function createGame(int $difficulty): void
     {
+        $randomPremiumNumbers = [];
+
         if ($difficulty === self::DIFFICULTY_EASY) {
             $difficultyDividerConstant = 6;
             $randomPremiumNumbers = [
-                rand(1, 4) => 7,
-                rand(5, 9) => 7,
+                rand(1, 2) => 9,
+                rand(3, 4) => 9,
+                rand(5, 6) => 9,
+                rand(7, 9) => 9,
             ];
         }
 
         if ($difficulty === self::DIFFICULTY_MEDIUM) {
             $difficultyDividerConstant = 7;
             $randomPremiumNumbers = [
-                rand(1, 9) => 6,
+                rand(1, 9) => 8,
             ];
         }
 
         if ($difficulty === self::DIFFICULTY_HARD) {
             $difficultyDividerConstant = 8;
             $randomPremiumNumbers = [
-                rand(1, 9) => 5,
+                rand(1, 9) => 7,
             ];
         }
 

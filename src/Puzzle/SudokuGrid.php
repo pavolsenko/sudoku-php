@@ -7,7 +7,7 @@ use InvalidArgumentException;
 class SudokuGrid
 {
     private array $grid;
-    private string $note;
+    private string $note = '';
 
     public function __construct(?array $grid = [])
     {
