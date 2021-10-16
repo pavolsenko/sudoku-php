@@ -25,5 +25,7 @@ class BacktrackGeneratorTest extends TestCase
             9,
             $puzzle->getGrid()[rand(0, 8)],
         );
+
+
     }
 }
