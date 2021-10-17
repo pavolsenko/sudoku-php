@@ -3,11 +3,9 @@ declare(strict_types = 1);
 
 namespace SudokuPhp\Helper;
 
-use SudokuPhp\Puzzle\SudokuGrid;
-
 class PuzzleHelper
 {
-    public function createEmptyGrid(): SudokuGrid
+    public function createEmptyGrid(): array
     {
         $grid = [];
 
@@ -17,7 +15,7 @@ class PuzzleHelper
             }
         }
 
-        return new SudokuGrid($grid);
+        return $grid;
     }
 
     /**

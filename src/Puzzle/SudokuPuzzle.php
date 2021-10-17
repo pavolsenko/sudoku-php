@@ -21,6 +21,7 @@ class SudokuPuzzle
     {
         $this->generator = $generator;
         $this->puzzleHelper = $puzzleHelper;
+        $this->gameGrid = new SudokuGrid($this->puzzleHelper->createEmptyGrid());
     }
 
     public function getGameGrid(): SudokuGrid
@@ -36,7 +37,6 @@ class SudokuPuzzle
     public function create(?int $difficulty = self::DIFFICULTY_EASY): void
     {
         $this->fullGrid = $this->generator->generate();
-        $this->gameGrid = $this->puzzleHelper->createEmptyGrid();
         $this->createGame($difficulty);
     }
 

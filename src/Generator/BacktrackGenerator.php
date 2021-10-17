@@ -13,12 +13,11 @@ class BacktrackGenerator implements GeneratorInterface
     public function __construct(PuzzleHelper $puzzleHelper)
     {
         $this->puzzleHelper = $puzzleHelper;
-        $this->sudokuGrid = new SudokuGrid();
+        $this->sudokuGrid = new SudokuGrid($this->puzzleHelper->createEmptyGrid());
     }
 
     public function generate(): SudokuGrid
     {
-        $this->sudokuGrid = $this->puzzleHelper->createEmptyGrid();
         $this->sudokuGrid = $this->sudokuGrid->setGridRow(
             0,
             $this->puzzleHelper->generateRandomNiner(),
