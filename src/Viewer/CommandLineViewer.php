@@ -24,6 +24,12 @@ class CommandLineViewer implements ViewerInterface
         $result .= "\n";
         $result .= $this->viewGrid($puzzle->getGameGrid());
 
+        if ($puzzle->getFullGrid()->getNote()) {
+            $result .= "\n";
+            $result .= $puzzle->getFullGrid()->getNote();
+            $result .= "\n";
+        }
+
         return $result;
     }
 
