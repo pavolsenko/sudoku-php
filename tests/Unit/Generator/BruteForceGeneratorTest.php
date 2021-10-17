@@ -19,6 +19,8 @@ class BruteForceGeneratorTest extends TestCase
 
     public function test_it_should_create_a_valid_puzzle()
     {
+        $this->markTestSkipped('brute force runtime too long');
+
         $puzzle = $this->bruteForceGenerator->generate();
 
         $this->assertCount(
