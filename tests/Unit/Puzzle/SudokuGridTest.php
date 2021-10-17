@@ -3,6 +3,7 @@
 namespace Unit\Puzzle;
 
 use PHPUnit\Framework\TestCase;
+use SudokuPhp\Helper\PuzzleHelper;
 use SudokuPhp\Puzzle\SudokuGrid;
 
 class SudokuGridTest extends TestCase
